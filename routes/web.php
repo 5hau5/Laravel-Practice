@@ -11,9 +11,6 @@ Route::get('/', function () {
     return view('welcome');
 });             
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -31,5 +28,4 @@ Route::get('categories', [CategoryController::class, 'index'])->name('categories
 Route::get('/shaus', [TheShausController::class, 'shausing'])->name('shaus.shausing');
 
 require __DIR__.'/auth.php';
-
 require __DIR__.'/admin.php';

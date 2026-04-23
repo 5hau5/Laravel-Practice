@@ -2,10 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 
-
-Route::prefix('admin')->group(function () {
-    Route::get('/', function () {  
-        return "Admin Dashboard";
-    })->name('admin.dashboard');
+Route::middleware("auth")->group(function () {
+    Route::prefix('admin')->group(function () {
+        Route::get('dashboard', function () {
+            return view('dashboard');
+        })->middleware(['auth', 'verified'])->name('dashboard');
+    });
 });
 
+require __DIR__.'/auth.php';
