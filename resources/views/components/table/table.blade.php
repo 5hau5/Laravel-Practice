@@ -41,10 +41,4 @@
     <div class=" px-4 py-3">
         {{ $rows->links() }}
     </div>
-    
-        
- 
-
-
-
 </div>

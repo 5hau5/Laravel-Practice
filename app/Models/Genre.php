@@ -14,4 +14,10 @@ class Genre extends Model
     {
         return $this->belongsToMany(Game::class, 'game_genre');
     }
+
+    public function getName()
+    // replace spaces with dashes and make first letter uppercase
+    {
+        return ucwords(str_replace('_', ' ', $this->name));
+    }
 }

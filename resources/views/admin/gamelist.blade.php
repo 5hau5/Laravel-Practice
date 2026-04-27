@@ -11,7 +11,7 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     {{ 'Game List' }}
                 </div>
-                <x-table.table :rows="$games" :fields="['id','name','description','published_date','publisher']"/>
+                <x-table.table :rows="$games" :fields="['id','name','description','published_date','publisher', 'genres']"/>
             </div>
         </div>
     </div>
