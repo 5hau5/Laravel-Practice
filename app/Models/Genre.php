@@ -10,6 +10,11 @@ class Genre extends Model
     /** @use HasFactory<\Database\Factories\GenreFactory> */
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'description'
+    ];
+
     public function games()
     {
         return $this->belongsToMany(Game::class, 'game_genre');
@@ -20,4 +25,23 @@ class Genre extends Model
     {
         return ucwords(str_replace('_', ' ', $this->name));
     }
+
+    public static function createGenre($data) {
+        $genre = self::create([
+            'name' => $data['name'],
+            'description' => $data['description']
+        ]);
+
+        return $genre;
+    }
+
+    public function updateGenre($genre, $data) {
+        $genre->update([
+            'name' => $data['name'],
+            'description' => $data['description']
+        ]);
+
+        return $genre;
+    }
 }
+

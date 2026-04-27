@@ -9,18 +9,25 @@ class Game extends Model
 {
     /** @use HasFactory<\Database\Factories\GameFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'description',
+        'published_date',
+        'publisher'
+    ];
     public function genres()
     {
         return $this->belongsToMany(Genre::class, 'game_genre');
     }
 
-    function createGame($data) {
-        $game = new Game();
-        $game->name = $data['name'];
-        $game->description = $data['description'];
-        $game->published_date = $data['published_date'];
-        $game->publisher = $data['publisher'];
-        $game->save();
+    public static function createGame($data) {
+        $game = self::create([
+            'name' => $data['name'],
+            'description' => $data['description'],
+            'published_date' => $data['published_date'],
+            'publisher' => $data['publisher']
+        ]);
 
         // Attach genres to the game
         if (isset($data['genres'])) {
@@ -28,6 +35,22 @@ class Game extends Model
         }
 
         return $game;
+    }
+
+    public function updateGame($data) {
+        $this->update([
+            'name' => $data['name'],
+            'description' => $data['description'],
+            'published_date' => $data['published_date'],
+            'publisher' => $data['publisher']
+        ]);
+
+        // Sync genres to the game
+        if (isset($data['genres'])) {
+            $this->genres()->sync($data['genres']);
+        } else {
+            $this->genres()->sync([]); // Detach all genres if none are provided
+        }
     }
 
     public function scopeWithGenres($query)
