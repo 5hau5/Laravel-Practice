@@ -8,20 +8,28 @@ use App\Models\Game;
 use App\Models\Genre;
 class GameController extends Controller
 {
-    public function list(Request $request) {   
-
-        
-        $games = Game::withGenres()->paginate(5);
-        
-        $games->getCollection()->transform(function ($game) {
-            // Transform the genres to only contain the names (no pivot data)
-            $game->genres = $game->genres->map(function ($genre) {
-                return $genre->getName();
-            }); 
-            return $game;
-        });
-        return view('admin.games.list', compact('games'));
-    }
+        public function list(Request $request) {  
+            //dd($request->all());
+            if ($request->has('search')) {
+                $search = $request->input('search');
+                $games = Game::withGenres()
+                    ->where('name', 'like', '%' . $search . '%')
+                    ->orWhere('description', 'like', '%' . $search . '%')
+                    ->orWhere('publisher', 'like', '%' . $search . '%')
+                    ->paginate(5);
+            } else {
+                $games = Game::withGenres()->paginate(5);
+            }
+            
+            $games->getCollection()->transform(function ($game) {
+                // Transform the genres to only contain the names (no pivot data)
+                $game->genres = $game->genres->map(function ($genre) {
+                    return $genre->getName();
+                }); 
+                return $game;
+            });
+            return view('admin.games.list', compact('games'));
+        }
 
     public function create(Request $request) {
         $genres = Genre::all();

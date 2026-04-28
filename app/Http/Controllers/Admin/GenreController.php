@@ -8,9 +8,17 @@ use App\Models\Genre;
 
 class GenreController extends Controller
 {
-    public function list() {
+    public function list(request $request) {
+  
 
-        $genres = Genre::paginate(5);
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $genres = Genre::where('name', 'like', '%' . $search . '%')
+                ->orWhere('description', 'like', '%' . $search . '%')
+                ->paginate(5);
+        } else {
+            $genres = Genre::paginate(5);
+        }
 
         return view('admin.genres.list', compact('genres'));
     }
