@@ -11,8 +11,20 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     {{ 'Genre List' }}
                 </div>
-                <x-table.table :rows="$genres" :fields="['id','name','description']"/>
+                <x-table.table 
+                :rows="$genres" 
+                :fields="['id','name','description']"
+                searchPlaceholder="Search Genres..." 
+                :searchRoute="route('genres.index')" 
+                />
             </div>
         </div>
     </div>
+
+    <div class="px-4 py-3">
+        <a href="{{ route('genres.create') }}" class="inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-wider hover:bg-gray-700 dark:hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+            {{ __('Create Genre') }}
+        </a>
+    </div>
+
 </x-app-layout>
