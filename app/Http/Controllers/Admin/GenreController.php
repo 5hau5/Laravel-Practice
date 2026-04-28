@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Devrabiul\ToastMagic\Facades\ToastMagic;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Genre;
@@ -35,6 +37,8 @@ class GenreController extends Controller
 
         Genre::createGenre($data);
 
+        ToastMagic::success('Genre created successfully.'); 
+
         return redirect()->route('genres.index')->with('success', 'Genre created successfully.');
     }
 
@@ -58,12 +62,16 @@ class GenreController extends Controller
 
         $genre->updateGenre($genre, $data);
 
+        ToastMagic::success('Genre ' . $genre->name . ' updated successfully.');
+
         return redirect()->route('genres.index')->with('success', 'Genre updated successfully.');
     }
 
     public function destroy(Request $request, $id) {
         $genre = Genre::findOrFail($id);
         $genre->delete();
+
+        ToastMagic::success('Genre ' . $genre->name . ' deleted successfully.');
 
         return redirect()->route('genres.index')->with('success', 'Genre deleted successfully.');
     }

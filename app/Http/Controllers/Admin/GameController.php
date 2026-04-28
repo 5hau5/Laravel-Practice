@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Game;
 use App\Models\Genre;
+
+use Devrabiul\ToastMagic\Facades\ToastMagic;
 class GameController extends Controller
 {
         public function list(Request $request) {  
@@ -53,6 +55,8 @@ class GameController extends Controller
 
         Game::createGame($data);
 
+        ToastMagic::success('Game '. $data['name'] . ' created successfully.');
+
         return redirect()->route('games.index')->with('success', 'Game created successfully.');
     }
 
@@ -73,12 +77,17 @@ class GameController extends Controller
         ]);
         $game->updateGame($data);
 
+        ToastMagic::success('Game ' . $game->name . ' updated successfully.');
+
         return redirect()->route('games.index')->with('success', 'Game updated successfully.');
     }
 
     public function destroy(Request $request, $id) {
         $game = Game::findOrFail($id);
+        $game_name = $game->name;
         $game->delete();
+
+        ToastMagic::success('Game ' . $game_name . ' deleted successfully.');
 
         return redirect()->route('games.index')->with('success', 'Game deleted successfully.');
     }
