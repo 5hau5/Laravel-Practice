@@ -19,7 +19,7 @@
                 </div>
                 <div class="mb-4">
                     <label for="published_date" class="block text-gray-700 dark:text-gray-300 font-bold mb-2">Published Date:</label>
-                    <input type="date" id="published_date" name="published_date" value="{{ $game->published_date }}" class="shadow appearance-none border rounded py-2 px-3 text-gray-700 dark:text-gray-300 dark:bg-gray-700 focus:outline-none focus:shadow-outline">
+                    <input type="date" id="published_date" name="published_date" value="{{  \Carbon\Carbon::parse($game->published_date)->format('Y-m-d') }}" class="shadow appearance-none border rounded py-2 px-3 text-gray-700 dark:text-gray-300 dark:bg-gray-700 focus:outline-none focus:shadow-outline">
                 </div>
                 <div class="mb-4">
                     <label for="publisher" class="block text-gray-700 dark:text-gray-300 font-bold mb-2">Publisher:</label>
@@ -33,7 +33,14 @@
                         @endforeach
                     </select>
                 </div>
-                <button type="submit" class="bg-blue-50 hover:bg-blue-7  focus:outline-none focus:ring-blue active:bg-blue-light">Update Game</button>
+                <div class="flex justify-center">
+                    <div class="px-4 py-3">
+                        <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-wider hover:bg-gray-700 dark:hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Update Game</button>
+                    </div>
+                    <x-buttons.button1 href="{{ route('games.index') }}" text="Back to List" class="ml-4" />
+                </div>
+
+                {{--  --}}
             </form>
         </div>
     </div>  
