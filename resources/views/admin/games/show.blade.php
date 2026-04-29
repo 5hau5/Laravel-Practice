@@ -16,8 +16,18 @@
                         <label for="description" class="block text-gray-700 dark:text-gray-300 font-bold mb-2">Description:</label>
                         <p id="description" class="text-gray-700 dark:text-gray-300">{{ $game->description }}</p>
                     </div>
+                    <div class="mb-4">
+                        <label for="published_date" class="block text-gray-700 dark:text-gray-300 font-bold mb-2">Published Date:</label>
+                        <p id="published_date" class="text-gray-700 dark:text-gray-300">{{ $game->published_date }}</p>
+                    </div>
+                    <div class="mb-4">
+                        <label for="publisher" class="block text-gray-700 dark:text-gray-300 font-bold mb-2">Publisher:</label>
+                        <p id="publisher" class="text   -gray-700 dark:text-gray-300">{{ $game->publisher }}</p>
                 </div>
-                <x-buttons.button1 href="{{ route('games.edit', $game->id) }}" text="Edit Game" />
+                <div class="flex justify-center">
+                    <x-buttons.button1 href="{{ route('games.edit', $game->id) }}" text="Edit Game" />
+                    <x-buttons.button1 href="{{ route('games.index') }}" text="Back to List" class="ml-4" />
+                </div> 
             </div>
         </div>
     </div>

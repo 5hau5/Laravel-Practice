@@ -16,7 +16,11 @@
                         <label for="description" class="block text-gray-700 dark:text-gray-300 font-bold mb-2">Description:</label>
                         <p id="description" class="text-gray-700 dark:text-gray-300">{{ $genre->description }}</p>
                     </div>
-                    <x-buttons.button1 href="{{ route('genres.edit', $genre->id) }}" text="Edit Genre" />
+
+                    <div class="flex justify-center">
+                        <x-buttons.button1 href="{{ route('genres.edit', $genre->id) }}" text="Edit Genre" />
+                        <x-buttons.button1 href="{{ route('genres.index') }}" text="Back to List" class="ml-4" />
+                    </div> 
                 </div>
             </div>
         </div>
