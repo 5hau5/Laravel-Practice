@@ -16,6 +16,8 @@
                 :fields="['id','name','description']"
                 searchPlaceholder="Search Genres..." 
                 :searchRoute="route('genres.index')" 
+                button_route="genres.show"
+                button_text="View Details"
                 />
             </div>
         </div>

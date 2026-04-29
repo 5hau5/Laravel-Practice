@@ -2,8 +2,11 @@
     'rows', 
     'fields',
     'searchRoute',
-    'searchPlaceholder'
-    ])
+    'searchPlaceholder',
+    'button_route' => null,
+    'button_text' => 'View',
+    ]);
+
 
 <div class="p-4 mx-auto">
     <div class="w-full flex justify-between items-center mb-3 mt-1 pl-3">
@@ -44,11 +47,13 @@
         </thead>
         <tbody>
         @foreach ($rows as $row)
-            <x-table.row :row="$row" :fields="$fields"/>
+            <x-table.row :row="$row" :fields="$fields" href="{{ route($button_route, $row->id) }}" text="{{ $button_text }}"/>
         @endforeach
         </tbody>
     </table>
+@php
     
+@endphp
     <div class=" px-4 py-3">
         {{ $rows->links() }}
     </div>
