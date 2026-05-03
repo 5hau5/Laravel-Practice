@@ -14,11 +14,17 @@
                 @csrf
                 <div class="mb-4">
                     <label for="name" class="block text-gray-700 dark:text-gray-300 font-bold mb-2">Name:</label>
-                    <input type="text" id="name" name="name" class="shadow appearance-none border rounded py-2 px-3 text-gray-700 dark:text-gray-300 dark:bg-gray-700 focus:outline-none focus:shadow-outline">
+                    <input type="text" id="name" name="name" value="{{ old('name') }}" class="shadow appearance-none border rounded py-2 px-3 text-gray-700 dark:text-gray-300 dark:bg-gray-700 focus:outline-none focus:shadow-outline">
+                    @error('name')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div class="mb-4">
                     <label for="description" class="block text-gray-700 dark:text-gray-300 font-bold mb-2">Description:</label>
-                    <textarea id="description" name="description" class="shadow appearance-none border rounded py-2 px-3 text-gray-700 dark:text-gray-300 dark:bg-gray-700 focus:outline-none focus:shadow-outline"></textarea>
+                    <textarea id="description" name="description" class="shadow appearance-none border rounded py-2 px-3 text-gray-700 dark:text-gray-300 dark:bg-gray-700 focus:outline-none focus:shadow-outline">{{ old('description') }}</textarea>
+                    @error('description')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
                 <button type="submit" class="bg-blue-50 hover:bg-blue-7  focus:outline-none focus:ring-blue active:bg-blue-light">Create Genre</button>
             </form>
