@@ -16,13 +16,19 @@ class GenreController extends Controller
         if ($request->has('search')) {
             $search = $request->input('search');
             $genres = Genre::where('name', 'like', '%' . $search . '%')
-                ->orWhere('description', 'like', '%' . $search . '%')
                 ->paginate(5);
         } else {
             $genres = Genre::paginate(5);
         }
 
         return view('admin.genres.list', compact('genres'));
+    }
+
+    public function search(Request $request) {
+        $search = $request->input('search');
+        $genres = Genre::where('name', 'like', '%' . $search . '%')->get();
+        
+        return response()->json($genres);
     }
 
     public function create() {

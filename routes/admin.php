@@ -23,8 +23,13 @@ Route::middleware("auth")->group(function () {
             Route::delete('{id}', [GameController::class, 'destroy'])->name('games.destroy');  // Delete game
         });
 
+        // routes/web.php
+
+        
+
         Route::prefix('genres')->group(function () {
             Route::get('/', [GenreController::class, 'list'])->name('genres.index');  // List genres
+            Route::get('/search', [GenreController::class, 'search'])->name('genres.search');
             Route::get('create', [GenreController::class, 'create'])->name('genres.create');  // Show genre creation form
             Route::post('/', [GenreController::class, 'store'])->name('genres.store');  // Store new genre
             Route::get('{id}', [GenreController::class, 'show'])->name('genres.show');  // Show single genre
