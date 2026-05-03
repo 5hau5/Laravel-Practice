@@ -11,7 +11,10 @@ use Devrabiul\ToastMagic\Facades\ToastMagic;
 class GameController extends Controller
 {
         public function list(Request $request) {  
-            //dd($request->all());
+            $request->validate([
+                'search' => 'nullable|string|max:255'
+            ]);
+
             if ($request->has('search')) {
                 $search = $request->input('search');
                 $games = Game::withGenres()
@@ -24,7 +27,6 @@ class GameController extends Controller
             }
             
             $games->getCollection()->transform(function ($game) {
-                // Transform the genres to only contain the names (no pivot data)
                 $game->genres = $game->genres->map(function ($genre) {
                     return $genre->getName();
                 }); 
@@ -83,6 +85,10 @@ class GameController extends Controller
     }
 
     public function destroy(Request $request, $id) {
+        $request->validate([
+            'id' => 'required|integer|exists:games,id'
+        ]);
+
         $game = Game::findOrFail($id);
         $game_name = $game->name;
         $game->delete();

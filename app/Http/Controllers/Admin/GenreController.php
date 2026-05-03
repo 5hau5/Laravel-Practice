@@ -11,7 +11,9 @@ use App\Models\Genre;
 class GenreController extends Controller
 {
     public function list(request $request) {
-  
+        $request->validate([
+            'search' => 'nullable|string|max:255'
+        ]);
 
         if ($request->has('search')) {
             $search = $request->input('search');
@@ -74,6 +76,10 @@ class GenreController extends Controller
     }
 
     public function destroy(Request $request, $id) {
+        $request->validate([
+            'id' => 'required|integer|exists:genres,id'
+        ]);
+        
         $genre = Genre::findOrFail($id);
         $genre->delete();
 
