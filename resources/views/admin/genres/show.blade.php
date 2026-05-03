@@ -20,6 +20,13 @@
                     <div class="flex justify-center">
                         <x-buttons.button1 href="{{ route('genres.edit', $genre->id) }}" text="Edit Genre" />
                         <x-buttons.button1 href="{{ route('genres.index') }}" text="Back to List" class="ml-4" />
+                        <x-confirm-action 
+                            message="do u want to delete {{ $genre->name }}?"   
+                            confirmRoute="{{ route('genres.destroy', $genre->id) }}" 
+                            cancelRoute="{{ url()->current() }}"
+                            confirmMethod="DELETE" 
+                            label="Delete Genre" 
+                        />
                     </div> 
                 </div>
             </div>

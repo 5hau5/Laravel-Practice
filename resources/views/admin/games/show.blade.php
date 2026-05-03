@@ -27,6 +27,13 @@
                 <div class="flex justify-center">
                     <x-buttons.button1 href="{{ route('games.edit', $game->id) }}" text="Edit Game" />
                     <x-buttons.button1 href="{{ route('games.index') }}" text="Back to List" class="ml-4" />
+                    <x-confirm-action 
+                        message="do u want to delete {{ $game->name }}?"   
+                        confirmRoute="{{ route('games.destroy', $game->id) }}" 
+                        cancelRoute="{{ url()->current() }}"
+                        confirmMethod="DELETE" 
+                        label="Delete Game" 
+                    />
                 </div> 
             </div>
         </div>

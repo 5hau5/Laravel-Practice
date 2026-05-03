@@ -13,11 +13,10 @@
                 </div>
                 <x-table.table 
                 :rows="$genres" 
-                :fields="['id','name','description']"
+                :fields="['id','name','description', 'actions']"
                 searchPlaceholder="Search Genres..." 
                 :searchRoute="route('genres.index')" 
-                button_route="genres.show"
-                button_text="View Details"
+                :actions="['genres.show'=> 'View Details', 'genres.edit' => 'Edit', 'genres.destroy' => 'Delete']"
                 />
             </div>
         </div>
