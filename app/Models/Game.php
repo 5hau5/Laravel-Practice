@@ -14,11 +14,15 @@ class Game extends Model
         'name',
         'description',
         'published_date',
-        'publisher'
     ];
     public function genres()
     {
         return $this->belongsToMany(Genre::class, 'game_genre');
+    }
+
+    public function publisher()
+    {
+        return $this->belongsTo(Publisher::class);
     }
 
     public static function createGame($data) {
@@ -26,8 +30,16 @@ class Game extends Model
             'name' => $data['name'],
             'description' => $data['description'],
             'published_date' => $data['published_date'],
-            'publisher' => $data['publisher']
         ]);
+
+        //attach publisher to the game
+        if (isset($data['publisher'])) {
+            $publisher = Publisher::find($data['publisher']);
+            if ($publisher) {
+                $game->publisher()->associate($publisher);
+                $game->save();
+            }
+        }
 
         // Attach genres to the game
         if (isset($data['genres'])) {
@@ -42,8 +54,19 @@ class Game extends Model
             'name' => $data['name'],
             'description' => $data['description'],
             'published_date' => $data['published_date'],
-            'publisher' => $data['publisher']
         ]);
+
+        // Update publisher association
+        if (isset($data['publisher'])) {
+            $publisher = Publisher::find($data['publisher']);
+            if ($publisher) {
+                $this->publisher()->associate($publisher);
+                $this->save();
+            }
+        } else {
+            $this->publisher()->dissociate();
+            $this->save();
+        }
 
         // Sync genres to the game
         if (isset($data['genres'])) {
@@ -53,10 +76,12 @@ class Game extends Model
         }
     }
 
-    public function scopeWithGenres($query)
+    public function scopeWithGenresAndPublisher($query)
     {
         return $query->with(['genres' => function ($query) {
             $query->select('genres.id', 'genres.name');
+        }, 'publisher' => function ($query) {
+            $query->select('publishers.id', 'publishers.name');
         }]);
     }
 }

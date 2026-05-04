@@ -31,11 +31,15 @@
                     @enderror
                 </div>
                 <div class="mb-4">
-                    <label for="publisher" class="block text-gray-700 dark:text-gray-300 font-bold mb-2">Publisher:</label>
-                    <input type="text" id="publisher" name="publisher" value="{{ old('publisher', $game->publisher) }}" class="shadow appearance-none border rounded py-2 px-3 text-gray-700 dark:text-gray-300 dark:bg-gray-700 focus:outline-none focus:shadow-outline">
-                    @error('publisher')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
+                    <label for="genres" class="block text-gray-700 dark:text-gray-300 font-bold mb-2">Genres:</label>
+                    <select id="publisher" name="publisher" class="shadow appearance-none border rounded py-2 px-3 text-gray-700 dark:text-gray-300 dark:bg-gray-700 focus:outline-none focus:shadow-outline">
+                        <option value="">-- Select Publisher</option>
+                        @foreach($publishers as $publisher)
+                            <option value="{{ $publisher->id }}"{{ (isset($selectedPublisher) && $selectedPublisher == $publisher->id) ? 'selected' : '' }}>
+                                {{ $publisher->name }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="mb-4">
                     <label for="genres" class="block text-gray-700 dark:text-gray-300 font-bold mb-2">Genres:</label>

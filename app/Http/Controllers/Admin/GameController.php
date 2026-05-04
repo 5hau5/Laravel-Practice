@@ -6,34 +6,34 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Game;
 use App\Models\Genre;
+use App\Models\Publisher;
 
 use Devrabiul\ToastMagic\Facades\ToastMagic;
 class GameController extends Controller
 {
-        public function list(Request $request) {  
-            $request->validate([
-                'search' => 'nullable|string|max:255'
-            ]);
+    public function list(Request $request) {  
+        $request->validate([
+            'search' => 'nullable|string|max:255'
+        ]);
 
-            if ($request->has('search')) {
-                $search = $request->input('search');
-                $games = Game::withGenres()
-                    ->where('name', 'like', '%' . $search . '%')
-                    ->orWhere('description', 'like', '%' . $search . '%')
-                    ->orWhere('publisher', 'like', '%' . $search . '%')
-                    ->paginate(5);
-            } else {
-                $games = Game::withGenres()->paginate(5);
-            }
-            
-            $games->getCollection()->transform(function ($game) {
-                $game->genres = $game->genres->map(function ($genre) {
-                    return $genre->getName();
-                }); 
-                return $game;
-            });
-            return view('admin.games.list', compact('games'));
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $games = Game::withGenresAndPublisher()
+                ->where('name', 'like', '%' . $search . '%')
+                ->orWhere('description', 'like', '%' . $search . '%')
+                ->paginate(5);
+        } else {
+            $games = Game::withGenresAndPublisher()->paginate(5);
         }
+        
+        $games->getCollection()->transform(function ($game) {
+            $game->genres = $game->genres->map(function ($genre) {
+                return $genre->getName();
+            }); 
+            return $game;
+        });
+        return view('admin.games.list', compact('games'));
+    }
 
     public function create(Request $request) {
         $genres = Genre::all();
@@ -41,9 +41,10 @@ class GameController extends Controller
     }
 
     public function edit(Request $request, $id) {
-        $game = Game::withGenres()->findOrFail($id);
+        $game = Game::withGenresAndPublisher()->findOrFail($id);
         $genres = Genre::all();
-        return view('admin.games.edit', compact('game', 'genres'));
+        $publishers = Publisher::all();
+        return view('admin.games.edit', compact('game', 'genres', 'publishers'));
     }  
 
     public function store(Request $request) {
@@ -51,8 +52,9 @@ class GameController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'published_date' => 'required|date',
-            'publisher' => 'required|string|max:255',
-            'genres' => 'array'
+            'publisher' => 'required|exists:publishers,id',
+            'genres' => 'array',
+            'genres.*' => 'exists:genres,id'
         ]);
 
         Game::createGame($data);
@@ -63,7 +65,7 @@ class GameController extends Controller
     }
 
     public function show(Request $request, $id) {
-        $game = Game::withGenres()->findOrFail($id);
+        $game = Game::withGenresAndPublisher()->findOrFail($id);
         return view('admin.games.show', compact('game'));
     }
 

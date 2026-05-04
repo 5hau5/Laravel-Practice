@@ -17,11 +17,12 @@ namespace App\Models{
  * @property string $name
  * @property string|null $description
  * @property string|null $published_date
- * @property string|null $publisher
+ * @property int|null $publisher_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Genre> $genres
  * @property-read int|null $genres_count
+ * @property-read \App\Models\Publisher|null $publisher
  * @method static \Database\Factories\GameFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Game newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Game newQuery()
@@ -31,9 +32,9 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Game whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Game whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Game wherePublishedDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Game wherePublisher($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Game wherePublisherId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Game whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Game withGenres()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Game withGenresAndPublisher()
  */
 	class Game extends \Eloquent {}
 }
@@ -58,6 +59,29 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Genre whereUpdatedAt($value)
  */
 	class Genre extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * @property int $id
+ * @property string $name
+ * @property string|null $description
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Game> $games
+ * @property-read int|null $games_count
+ * @method static \Database\Factories\PublisherFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Publisher newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Publisher newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Publisher query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Publisher search($searchTerm)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Publisher whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Publisher whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Publisher whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Publisher whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Publisher whereUpdatedAt($value)
+ */
+	class Publisher extends \Eloquent {}
 }
 
 namespace App\Models{

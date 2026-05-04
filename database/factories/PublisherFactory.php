@@ -2,14 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Models\Game;
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Publisher;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<Game>
+ * @extends Factory<Publisher>
  */
-class GameFactory extends Factory
+class PublisherFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -19,10 +18,8 @@ class GameFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->words(2, true),
+            'name' => $this->faker->word(),
             'description' => $this->faker->sentence(),
-            'published_date' => $this->faker->dateTime(),
-            'publisher_id' => Publisher::factory(),
         ];
     }
 }

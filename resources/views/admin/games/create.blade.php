@@ -31,8 +31,15 @@
                                     <input type="date" id="published_date" name="published_date" value="{{ old('published_date') }}" class="shadow appearance-none border rounded py-2 px-3 text-gray-700 dark:text-gray-300 dark:bg-gray-700 focus:outline-none focus:shadow-outline w-full">
                                 </div>
                                 <div class="w-1/2">
-                                    <label for="publisher" class="block text-gray-700 dark:text-gray-300 font-bold mb-2">Publisher:</label>
-                                    <input type="text" id="publisher" name="publisher" class="shadow appearance-none border rounded py-2 px-3 text-gray-700 dark:text-gray-300 dark:bg-gray-700 focus:outline-none focus:shadow-outline w-full">
+                                    <label for="published_date" class="block text-gray-700 dark:text-gray-300 font-bold mb-2">Publisher:</label>
+                                    <select id="publisher" name="publisher" class="shadow appearance-none border rounded py-2 px-3 text-gray-700 dark:text-gray-300 dark:bg-gray-700 focus:outline-none focus:shadow-outline">
+                                        <option value="">-- Select Publisher --</option>
+                                        @foreach($publishers as $publisher)
+                                            <option value="{{ $publisher->id }}"{{( old('publisher')== $publisher->id) ? 'selected' : '' }}>
+                                                {{ $publisher->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -43,7 +50,7 @@
                             <label for="genres" class="block text-gray-700 dark:text-gray-300 font-bold mb-2">Genres:</label>
                             <select id="genres" name="genres[]" multiple class="shadow appearance-none border rounded py-2 px-3 text-gray-700 dark:text-gray-300 dark:bg-gray-700 focus:outline-none focus:shadow-outline w-full h-full">
                                 @foreach($genres as $genre)
-                                    <option value="{{ $genre->id }}" {{ isset($selectedItems) && in_array($genre->id, $selectedItems) ? 'selected' : '' }}>{{ $genre->name }}</option>
+                                    <option value="{{ $genre->id }}" {{in_array($genre->id, old('genres', [])) ? 'selected' : '' }}>{{ $genre->name }}</option>
                                 @endforeach
                             </select>
                         </div>
