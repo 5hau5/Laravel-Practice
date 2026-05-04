@@ -26,13 +26,6 @@ class GenreController extends Controller
         return view('admin.genres.list', compact('genres'));
     }
 
-    public function search(Request $request) {
-        $search = $request->input('search');
-        $genres = Genre::where('name', 'like', '%' . $search . '%')->get();
-        
-        return response()->json($genres);
-    }
-
     public function create() {
         return view('admin.genres.create');
     }
