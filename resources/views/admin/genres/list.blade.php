@@ -14,6 +14,7 @@
                 <x-table.table 
                 :rows="$genres" 
                 :fields="['id','name','description', 'actions']"
+                :headers="['#','Name','Description', 'Actions']"
                 searchPlaceholder="Search Genres..." 
                 :searchRoute="route('genres.index')" 
                 :actions="['genres.show'=> 'View Details', 'genres.edit' => 'Edit', 'genres.destroy' => 'Delete']"
