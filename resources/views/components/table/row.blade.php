@@ -4,21 +4,29 @@
     'actions',
     ])
 
+
+
 <tr class="bg-white dark:bg-gray-700 overflow-hidden shadow-sm sm:rounded-lg hover:bg-slate-50 hover:dark:bg-gray-600 border-b border-slate-200 dark:border-gray-800">
     @foreach ($fields as $field)
-        @if (isset($row->$field))
-            <td class="p-4 py-5">
-                @if ($field === 'id')
-                    <p class="text-sm font-semibold text-gray-900 dark:text-gray-100">
-                        {{ $row->$field }}
-                    </p>
-                @else
-                <p class="text-sm text-gray-900 dark:text-gray-100">
-                    {{ $row->$field }}
+        @php
+            $value = data_get($row, $field);
+        @endphp
+        
+        <td class="p-4 py-5">
+            @if ($field === 'id')
+                <p class="text-sm font-semibold text-gray-900 dark:text-gray-100">
+                    {{ $value ?? '-' }}
                 </p>
-                @endif
-            </td>
-        @endif
+            @elseif (is_array($field) || $value instanceof \Illuminate\Support\Collection)
+                <p class="text-sm text-gray-900 dark:text-gray-100">
+                    {{ collect($value)->implode(', ') }}
+                </p>               
+            @else
+                <p class="text-sm text-gray-900 dark:text-gray-100">
+                    {{ $value ?? '-' }}
+                </p>
+            @endif
+        </td>
     @endforeach
     <td class="p-4 py-5">
         @foreach ($actions as $route => $label)

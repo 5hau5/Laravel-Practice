@@ -19,7 +19,7 @@
     <div class="relative flex flex-col w-full h-full overflow-scrolltext-gray-900 dark:text-gray-100" bg-white shadow-md rounded-lg bg-clip-border">
     <table class="w-full text-left table-auto min-w-max rounded-lg">
         <thead> 
-            <x-table.head :list="$headers"/>
+            <x-table.head :headers="$headers"/>
         </thead>
         <tbody>
         @foreach ($rows as $row)

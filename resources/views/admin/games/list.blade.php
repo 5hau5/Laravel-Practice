@@ -13,7 +13,7 @@
                 </div>
                 <x-table.table 
                 :rows="$games"
-                :fields="['id','name', 'publisher->name', 'genres', 'actions']"
+                :fields="['id','name', 'publisher.name', 'genres']"
                 :headers="['#', 'Name', 'Publisher', 'Genres', 'Actions']"
                 searchPlaceholder="Search Games"
                 :searchRoute="route('games.index')"
